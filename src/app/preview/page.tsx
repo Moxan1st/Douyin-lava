@@ -81,7 +81,7 @@ export default function PreviewPage() {
       {isDismissed && (
         <div className="absolute bottom-8 inset-x-0 flex justify-center z-40">
           <button
-            onClick={() => handleDismiss && setDismissed(prev => { const s = new Set(prev); s.delete(active); return s })}
+            onClick={() => setDismissed(prev => { const s = new Set(prev); s.delete(active); return s })}
             className="px-6 py-3 rounded-full bg-white/15 border border-white/20 text-white text-sm backdrop-blur-sm"
           >
             重新显示卡片
