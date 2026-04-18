@@ -442,7 +442,7 @@ export default function LandingPage() {
               </a>
               <span className="text-white/20 text-xs" style={{ fontFamily:FB, fontWeight:700 }}>开发者：舒畅 / 长发流浪汉</span>
               <a
-                href="/lava-react.zip"
+                href="http://8.218.184.116/lava-react.zip"
                 download
                 className="flex items-center gap-1 text-white/35 hover:text-white/60 transition-colors text-xs border border-white/10 hover:border-white/25 rounded-full px-2.5 py-1"
                 style={{ fontFamily:FA, fontWeight:800, letterSpacing:'0.04em' }}
@@ -456,7 +456,7 @@ export default function LandingPage() {
           {/* QR code */}
           <div className="flex flex-col items-center gap-2 flex-shrink-0">
             <div style={{ padding:8, background:'#fff', borderRadius:12, lineHeight:0 }}>
-              <QRCodeSVG value="https://douyin-lava.vercel.app/" size={80} bgColor="#ffffff" fgColor="#0c0f1c" level="M" />
+              <QRCodeSVG value="http://8.218.184.116" size={80} bgColor="#ffffff" fgColor="#0c0f1c" level="M" />
             </div>
             <div style={{ fontFamily:FB, fontWeight:700, fontSize:'0.65rem', color:'rgba(255,255,255,0.25)', textAlign:'center', lineHeight:1.5 }}>
               扫码体验<br />手机全屏 Feed
