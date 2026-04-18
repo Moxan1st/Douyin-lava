@@ -9,7 +9,7 @@ const stagger = {
   container: { animate: { transition: { staggerChildren: 0.07 } } },
   item: {
     initial: { opacity: 0, y: 18 },
-    animate: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 380, damping: 26 } },
+    animate: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 380, damping: 26 } },
   },
 }
 
