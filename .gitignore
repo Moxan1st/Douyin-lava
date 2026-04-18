@@ -36,6 +36,12 @@ yarn-error.log*
 # vercel
 .vercel
 
+# 本地视频素材（文件过大，不入库）
+/public/videos/
+
+# Windows Zone.Identifier
+*.Identifier
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
