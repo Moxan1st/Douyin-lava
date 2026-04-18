@@ -5,7 +5,7 @@
 chrome.runtime.sendMessage({ type: 'RESET_STATE' }).catch(() => {})
 
 // ── 内联 cardRenderer 全量代码 ────────────────────────────────────────────
-const LAVA_BASE = 'https://lava.zeabur.app'
+const LAVA_BASE = 'http://8.218.184.116'
 
 const ACCENT = {
   food:         { hero: 'linear-gradient(145deg,#c94b00,#f97316 45%,#fbbf24)', badge: 'NEAR YOU',  btn: '#f97316' },

@@ -2,7 +2,7 @@
 // 所有 emotionEngine 逻辑内联，状态持久化到 chrome.storage.session
 
 // 所有 AI 调用通过 Next.js 服务端中转，extension 本身不持有任何 API key
-const LAVA_SERVER = 'https://lava.zeabur.app'
+const LAVA_SERVER = 'http://8.218.184.116'
 const SCREENSHOT_COOLDOWN_MS = 10000
 const MIN_WATCH_SECONDS = 2
 
@@ -160,7 +160,8 @@ async function captureTab() {
     t.url && (
       t.url.includes('douyin.com') ||
       t.url.includes('tiktok.com') ||
-      t.url.includes('localhost:3000')
+      t.url.includes('localhost:3000') ||
+      t.url.includes('8.218.184.116')
     )
   )
   if (!tab?.windowId) throw new Error('no target tab found')
