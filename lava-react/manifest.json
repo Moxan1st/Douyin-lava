@@ -12,7 +12,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.douyin.com/*", "*://*.tiktok.com/*", "http://localhost:3000/*"],
+      "matches": ["*://*.douyin.com/*", "*://*.tiktok.com/*", "http://localhost:3000/*", "http://8.218.184.116/*"],
       "js": ["content.js"],
       "run_at": "document_idle"
     }
