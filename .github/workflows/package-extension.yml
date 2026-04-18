@@ -1,0 +1,29 @@
+name: Package Lava React Extension
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lava-react/**'
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Zip extension
+        run: |
+          cd lava-react
+          zip -r ../lava-react.zip . \
+            -x "*.DS_Store" \
+            -x "*/.Identifier" \
+            -x "*.Identifier"
+
+      - name: Commit zip
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add lava-react.zip
+          git diff --staged --quiet || git commit -m "chore: update lava-react.zip [skip ci]"
+          git push

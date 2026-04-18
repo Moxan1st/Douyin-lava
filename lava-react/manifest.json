@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Lava React",
+  "version": "0.1.0",
+  "description": "照出你心里真实的欲望",
+  "permissions": ["tabs", "activeTab", "storage", "scripting"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.douyin.com/*", "*://*.tiktok.com/*", "http://localhost:3000/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Lava React",
+    "default_icon": { "128": "icons/logo.png" }
+  },
+  "icons": { "128": "icons/logo.png" },
+  "web_accessible_resources": [{
+    "resources": ["icons/logo.png"],
+    "matches": ["<all_urls>"]
+  }]
+}
