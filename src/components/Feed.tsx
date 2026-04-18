@@ -109,7 +109,26 @@ export default function Feed() {
       <div
         ref={containerRef}
         className="w-full h-full overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
-        style={{ scrollSnapType: 'y mandatory', WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+        style={{ scrollSnapType: 'y mandatory', WebkitOverflowScrolling: 'touch', cursor: 'grab' } as React.CSSProperties}
+        onMouseDown={e => {
+          const el = containerRef.current
+          if (!el) return
+          const startY = e.pageY
+          const startScroll = el.scrollTop
+          el.style.cursor = 'grabbing'
+          el.style.scrollSnapType = 'none'
+          const onMove = (me: MouseEvent) => {
+            el.scrollTop = startScroll + (startY - me.pageY)
+          }
+          const onUp = () => {
+            el.style.cursor = 'grab'
+            el.style.scrollSnapType = 'y mandatory'
+            document.removeEventListener('mousemove', onMove)
+            document.removeEventListener('mouseup', onUp)
+          }
+          document.addEventListener('mousemove', onMove)
+          document.addEventListener('mouseup', onUp)
+        }}
       >
         {ALL_VIDEOS.map((video, index) => (
           <div
@@ -136,13 +155,8 @@ export default function Feed() {
         ))}
       </div>
 
-      {/* Logo + 静音按钮 */}
-      <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-4 pt-10 z-40 pointer-events-none">
-        <div className="flex items-center gap-2 pointer-events-auto">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Lava" className="w-8 h-8 object-contain drop-shadow-lg" />
-          <span className="text-white font-bold text-base tracking-wide drop-shadow">LAVA</span>
-        </div>
+      {/* 静音按钮 */}
+      <div className="absolute top-0 right-0 px-4 pt-10 z-40 pointer-events-none">
         <button
           onClick={() => setMuted(m => !m)}
           className="pointer-events-auto w-9 h-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center"
