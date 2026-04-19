@@ -197,8 +197,47 @@ async function callVisionAPI(imageBase64, watchedSeconds) {
 }
 
 // ── 通知 content.js ───────────────────────────────────────────────────────
+const FALLBACK_QUESTIONS = {
+  food:         '你是不是很想吃贵州酸汤鱼了？',
+  travel:       '贵州凯里等你很久了。',
+  happy:        '今天挺开心的嘛？',
+  depressed_1:  '最近有点累了吧？',
+  depressed_2:  '你不是一个人。',
+  melancholy_1: '出去透透气吧。',
+  melancholy_2: '还要让贵州等你多久？',
+}
+
+const TOPICS = {
+  food:         '贵州酸汤鱼',
+  travel:       '贵州凯里',
+  melancholy_2: '贵州凯里',
+  happy:        '好心情',
+  depressed_1:  '压力与疲惫',
+  depressed_2:  '心理健康',
+  melancholy_1: '户外散步',
+}
+
 async function notifyContentScript(event) {
-  const question = QUESTIONS[event.scenario] ?? '你想要什么？'
+  let question = FALLBACK_QUESTIONS[event.scenario] ?? '你想要什么？'
+
+  // 动态调用 AI 生成灵魂拷问文案
+  try {
+    const topic = TOPICS[event.scenario]
+    if (topic) {
+      const res = await fetch(`${LAVA_SERVER}/api/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scenario: event.scenario, topic, phase: 'question' }),
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.question) question = data.question
+      }
+    }
+  } catch (e) {
+    console.warn('[LavaReact] generate API failed, using fallback', e)
+  }
+
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
     if (!tab?.id) return
@@ -210,16 +249,6 @@ async function notifyContentScript(event) {
   } catch (e) {
     console.warn('[LavaReact] notifyContentScript failed', e)
   }
-}
-
-const QUESTIONS = {
-  food:         '酸汤鱼旁边就有',
-  travel:       '凯里等你多久了',
-  happy:        '今天挺开心的嘛',
-  depressed_1:  '最近有点累了吧',
-  depressed_2:  '你不是一个人',
-  melancholy_1: '出去透透气吧',
-  melancholy_2: '换个地方发呆吧',
 }
 
 // ── 内联 emotionEngine 逻辑 ───────────────────────────────────────────────
