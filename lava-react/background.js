@@ -245,6 +245,7 @@ async function notifyContentScript(event) {
       type: 'INJECT_CARD',
       scenario: event.scenario,
       question,
+      topic: state.reasoning || '',
     })
   } catch (e) {
     console.warn('[LavaReact] notifyContentScript failed', e)

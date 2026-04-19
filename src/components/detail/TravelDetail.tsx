@@ -112,11 +112,17 @@ export default function TravelDetail({ destination, question }: Props) {
             <p className="text-blue-300 text-xs">💡 {itinerary.transport.tip}</p>
           </div>
           <div className="flex gap-2">
-            <button onClick={() => window.open('https://www.12306.cn', '_blank')}
+            <button onClick={() => window.open(
+              `https://kyfw.12306.cn/otn/leftTicket/init?linktypeid=dc&ts=${encodeURIComponent(itinerary.destination)}`,
+              '_blank'
+            )}
               className="flex-1 py-2.5 rounded-xl bg-blue-600/30 border border-blue-500/30 text-blue-300 text-sm font-medium flex items-center justify-center gap-1.5">
               <Train size={15} />查高铁票
             </button>
-            <button onClick={() => window.open('https://flights.ctrip.com', '_blank')}
+            <button onClick={() => window.open(
+              `https://flights.ctrip.com/online/list/oneway?keyword=${encodeURIComponent(itinerary.destination)}`,
+              '_blank'
+            )}
               className="flex-1 py-2.5 rounded-xl bg-indigo-600/30 border border-indigo-500/30 text-indigo-300 text-sm font-medium flex items-center justify-center gap-1.5">
               <Plane size={15} />查机票
             </button>

@@ -95,12 +95,13 @@ function buildPreview(scenario) {
   return `<p style="color:rgba(255,255,255,0.4);font-size:13px;margin:0;">点击查看完整推荐 ›</p>`
 }
 
-function getDetailUrl(scenario, question) {
+function getDetailUrl(scenario, question, topic) {
   const q = encodeURIComponent(question)
+  const t = encodeURIComponent(topic || (scenario === 'food' ? '贵州酸汤鱼' : '贵州凯里'))
   if (scenario === 'food')
-    return `${LAVA_BASE}/detail/food?topic=${encodeURIComponent('贵州酸汤鱼')}&question=${q}`
+    return `${LAVA_BASE}/detail/food?topic=${t}&question=${q}`
   if (scenario === 'travel' || scenario === 'melancholy_2')
-    return `${LAVA_BASE}/detail/travel?topic=${encodeURIComponent('贵州凯里')}&question=${q}`
+    return `${LAVA_BASE}/detail/travel?topic=${t}&question=${q}`
   return null
 }
 
@@ -132,7 +133,7 @@ function injectDetailOverlay(url) {
   shadow.getElementById('back').addEventListener('click', () => host.remove())
 }
 
-function injectCard(scenario, question) {
+function injectCard(scenario, question, topic) {
   if (document.getElementById('lava-react-host')) return
 
   const ac = ACCENT[scenario] ?? ACCENT.food
@@ -235,7 +236,7 @@ function injectCard(scenario, question) {
     }
   }
   shadow.getElementById('btn-confirm').onclick = () => {
-    const url = getDetailUrl(scenario, question)
+    const url = getDetailUrl(scenario, question, topic)
     if (url) {
       injectDetailOverlay(url)
     } else {
@@ -346,7 +347,7 @@ setInterval(sendHeartbeat, 5000)
 
 // ── 接收 background 的注入指令 ───────────────────────────────────────────
 chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.type === 'INJECT_CARD') injectCard(msg.scenario, msg.question)
+  if (msg.type === 'INJECT_CARD') injectCard(msg.scenario, msg.question, msg.topic)
   if (msg.type === 'STATE_UPDATE') refreshWidget()
 })
 
