@@ -222,7 +222,7 @@ async function notifyContentScript(event) {
 
   // 动态调用 AI 生成灵魂拷问文案
   try {
-    const topic = TOPICS[event.scenario]
+    const topic = state.reasoning || TOPICS[event.scenario]
     if (topic) {
       const res = await fetch(`${LAVA_SERVER}/api/generate`, {
         method: 'POST',
